@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "962214084932",
+    "firebase_url": "https://micalculadora-e716b.firebaseio.com",
+    "project_id": "micalculadora-e716b",
+    "storage_bucket": "micalculadora-e716b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962214084932:android:52cb9c0c58265d40ba1711",
+        "android_client_info": {
+          "package_name": "appjpm4everyone.micalculadora"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962214084932-r6cb0l4mfsdo0ahin58isi9cnhdebcek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4r6kCzVZqXj1L3cTkoLUh_xgHlQcOVx8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "962214084932-r6cb0l4mfsdo0ahin58isi9cnhdebcek.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

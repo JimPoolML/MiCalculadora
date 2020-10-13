@@ -3,4 +3,21 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <!-- Portrait -->
+    <color name="blue_sky">#d0f8fe</color>
+    <color name="blue_ans">#2e40fb</color>
+    <color name="black_text">#000000</color>
+    <color name="blue_button">#2975fb</color>
+    <color name="gray_button">#d6d7d7</color>
+    <color name="orange_button">#fd762a</color>
+    <color name="red_button">#e14337</color>
+    <color name="off_button">#2aaffc</color>
+
+    <!--Landscape -->
+    <color name="background_white">#fafafa</color>
+    <color name="lands_ans">#737373</color>
+    <color name="lands_blue_button">#2296f3</color>
+    <color name="lands_white_button">#fafafa</color>
+
 </resources>
