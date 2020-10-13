@@ -61,13 +61,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline78"
+            android:id="@+id/guideline76"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintGuide_percent="0.78"
+            app:layout_constraintGuide_percent="0.75"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -130,7 +130,7 @@
             app:layout_constraintTop_toTopOf="@id/guidelineV6"
             app:layout_constraintBottom_toBottomOf="@id/guidelineV14"/>
 
-        <Button
+        <!--<Button
             android:id="@+id/btnMp"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -160,6 +160,68 @@
             app:layout_constraintRight_toRightOf="@+id/guideline40"
             app:layout_constraintTop_toBottomOf="@+id/txtAns"
             app:layout_constraintBottom_toBottomOf="@+id/guidelineV25"/>
+
+        <Button
+            android:id="@+id/btnC"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:background="@color/blue_button"
+            android:textSize="@dimen/text_dim_18"
+            android:text="@string/c"
+            android:textColor="@color/black_text"
+            android:paddingHorizontal="@dimen/dp_15"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline40"
+            app:layout_constraintRight_toRightOf="@+id/guideline58"
+            app:layout_constraintTop_toBottomOf="@+id/txtAns"
+            app:layout_constraintBottom_toBottomOf="@+id/guidelineV25"/>
+
+        <Button
+            android:id="@+id/btnCe"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:background="@color/blue_button"
+            android:textSize="@dimen/text_dim_18"
+            android:text="@string/ce"
+            android:textColor="@color/black_text"
+            android:paddingHorizontal="@dimen/dp_15"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline58"
+            app:layout_constraintRight_toRightOf="@+id/guideline76"
+            app:layout_constraintTop_toBottomOf="@+id/txtAns"
+            app:layout_constraintBottom_toBottomOf="@+id/guidelineV25"/>
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:background="@color/blue_button"
+            android:textSize="@dimen/text_dim_18"
+            android:text="@string/add"
+            android:textColor="@color/black_text"
+            android:paddingHorizontal="@dimen/dp_15"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline76"
+            app:layout_constraintRight_toRightOf="@+id/guideline92"
+            app:layout_constraintTop_toBottomOf="@+id/txtAns"
+            app:layout_constraintBottom_toBottomOf="@+id/guidelineV25"/>-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/calculatorR"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline7"
+            app:layout_constraintRight_toRightOf="@+id/guideline92"
+            app:layout_constraintTop_toBottomOf="@+id/txtAns"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

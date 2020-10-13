@@ -1,6 +1,35 @@
 <resources>
     <string name="app_name">MiCalculadora</string>
     <string name="initZeros">0.0</string>
+
+    <!-- Buttons -->
     <string name="mm">M+</string>
     <string name="mn">M</string>
+    <string name="c">C</string>
+    <string name="ce">CE</string>
+    <string name="add">+</string>
+
+    <string name="nine">9</string>
+    <string name="eight">8</string>
+    <string name="seven">CE</string>
+    <string name="pot">POT</string>
+    <string name="subtract">-</string>
+
+    <string name="six">6</string>
+    <string name="five">5</string>
+    <string name="four">4</string>
+    <string name="root">RAIZ</string>
+    <string name="multiply">*</string>
+
+    <string name="three">3</string>
+    <string name="two">2</string>
+    <string name="one">1</string>
+    <string name="percentage">%</string>
+    <string name="divide">-</string>
+
+    <string name="zero">0</string>
+    <string name="dot">.</string>
+    <string name="change_sing">+/-</string>
+    <string name="off">OFF</string>
+    <string name="equals">=</string>
 </resources>
