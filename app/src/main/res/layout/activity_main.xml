@@ -124,7 +124,7 @@
             android:gravity="end|center_vertical"
             android:paddingHorizontal="@dimen/dp_15"
             android:textColor="@color/blue_ans"
-            android:maxLength="12"
+            android:maxLength="16"
             android:background="@color/blue_sky"
             app:layout_constraintLeft_toLeftOf="@+id/guideline7"
             app:layout_constraintRight_toRightOf="@+id/guideline92"

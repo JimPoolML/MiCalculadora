@@ -49,6 +49,7 @@ class UseCasesValidateData {
         when (position){
             2 -> value = "C"
             21 -> value = "."
+            22 -> value = "+/-"
         }
         return value
     }
@@ -61,6 +62,10 @@ class UseCasesValidateData {
             14 -> value = "*"
             19 -> value = "/"
             24 -> value = "="
+            //Others operators
+            8 -> value = "POT"
+            13 -> value = "ROOT"
+            18 -> value = "%"
         }
         return value
     }
@@ -77,7 +82,7 @@ class UseCasesValidateData {
     }
 
     private fun validateAnotherNumbers(value: String, answer: String): String {
-        return if (answer.length == 1 && answer.startsWith("0")) {
+        return if ( (answer=="ERROR") || (answer.length == 1 && answer.startsWith("0")) ) {
             value
         }else{
             "$answer$value"
@@ -85,7 +90,7 @@ class UseCasesValidateData {
     }
 
     private fun validateZeros(answer: String): String {
-        return if (answer.length == 1 && answer.startsWith("0")) {
+        return if ((answer=="ERROR") || (answer.length == 1 && answer.startsWith("0")) ) {
             answer
         }else{
             answer + "0"
@@ -93,10 +98,16 @@ class UseCasesValidateData {
     }
 
      private fun setDotNumber(answer: String) : String{
-        return if (answer.contains(".") ) {
-            answer
-        }else{
-            "$answer."
+        return when {
+            answer.contains(".") -> {
+                answer
+            }
+            answer=="ERROR" -> {
+                "0."
+            }
+            else -> {
+                "$answer."
+            }
         }
     }
 
