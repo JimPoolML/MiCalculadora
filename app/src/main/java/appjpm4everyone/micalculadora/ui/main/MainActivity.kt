@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.Display
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,12 +14,13 @@ import appjpm4everyone.micalculadora.R
 import appjpm4everyone.micalculadora.databinding.ActivityMainBinding
 import appjpm4everyone.micalculadora.ui.main.adapters.ButtonCalc
 import appjpm4everyone.micalculadora.ui.main.adapters.CalcAdapter
+import appjpm4everyone.micalculadora.ui.main.adapters.OnGetButton
 import appjpm4everyone.micalculadora.utils.app
 import appjpm4everyone.micalculadora.utils.getViewModel
 import kotlin.math.roundToInt
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnGetButton {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var component: MainActivityComponent
@@ -26,8 +28,8 @@ class MainActivity : AppCompatActivity() {
 
     //RecyclerView
     private val columns = 5
-    private var gridLayoutManager: GridLayoutManager ? = null
-    private var arrayList: ArrayList<ButtonCalc> ? = null
+    private var gridLayoutManager: GridLayoutManager? = null
+    private var arrayList: ArrayList<ButtonCalc>? = null
     private var calcAdapter: CalcAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +49,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setRecyclerItems() {
-        gridLayoutManager = GridLayoutManager(applicationContext, getDisplayWidth(), LinearLayoutManager.VERTICAL, false)
+        gridLayoutManager = GridLayoutManager(
+            applicationContext,
+            getDisplayWidth(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
         //gridLayoutManager = GridLayoutManager(applicationContext, 3, LinearLayoutManager.VERTICAL, false)
         binding.calculatorR.layoutManager = gridLayoutManager
         binding.calculatorR.setHasFixedSize(true)
@@ -55,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         //arrayList
         arrayList = ArrayList()
         arrayList = setEachButton()
-        calcAdapter = CalcAdapter(applicationContext, arrayList!!)
+        calcAdapter = CalcAdapter(applicationContext, arrayList!!, this)
         //set Adapter to recyclerView
         binding.calculatorR.adapter = calcAdapter
 
@@ -78,38 +85,38 @@ class MainActivity : AppCompatActivity() {
         TODO("Not yet implemented")
     }
 
-    private fun setEachButton(): ArrayList<ButtonCalc>{
+    private fun setEachButton(): ArrayList<ButtonCalc> {
         var buttonItems: ArrayList<ButtonCalc> = ArrayList()
 
-        buttonItems.add(ButtonCalc("M+", R.color.blue_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("M", R.color.blue_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("C", R.color.blue_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("CE", R.color.blue_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("+", R.color.red_button, R.color.black_text) )
+        buttonItems.add(ButtonCalc("M+", R.color.blue_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("M", R.color.blue_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("C", R.color.blue_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("CE", R.color.blue_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("+", R.color.red_button, R.color.black_text))
 
-        buttonItems.add(ButtonCalc("9", R.color.gray_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("8", R.color.gray_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("7", R.color.gray_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("POT", R.color.orange_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("-", R.color.red_button, R.color.black_text) )
+        buttonItems.add(ButtonCalc("9", R.color.gray_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("8", R.color.gray_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("7", R.color.gray_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("POT", R.color.orange_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("-", R.color.red_button, R.color.black_text))
 
-        buttonItems.add(ButtonCalc("6", R.color.gray_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("5", R.color.gray_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("4", R.color.gray_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("RAIZ", R.color.orange_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("-", R.color.red_button, R.color.black_text) )
+        buttonItems.add(ButtonCalc("6", R.color.gray_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("5", R.color.gray_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("4", R.color.gray_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("RAIZ", R.color.orange_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("*", R.color.red_button, R.color.black_text))
 
-        buttonItems.add(ButtonCalc("3", R.color.gray_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("2", R.color.gray_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("1", R.color.gray_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("%", R.color.orange_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("/", R.color.red_button, R.color.black_text) )
+        buttonItems.add(ButtonCalc("3", R.color.gray_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("2", R.color.gray_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("1", R.color.gray_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("%", R.color.orange_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("/", R.color.red_button, R.color.black_text))
 
-        buttonItems.add(ButtonCalc("0", R.color.gray_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc(".", R.color.gray_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("+/-", R.color.orange_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("OFF", R.color.off_button, R.color.black_text) )
-        buttonItems.add(ButtonCalc("=", R.color.red_button, R.color.black_text) )
+        buttonItems.add(ButtonCalc("0", R.color.gray_button, R.color.black_text))
+        buttonItems.add(ButtonCalc(".", R.color.gray_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("+/-", R.color.orange_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("OFF", R.color.off_button, R.color.black_text))
+        buttonItems.add(ButtonCalc("=", R.color.red_button, R.color.black_text))
 
         return buttonItems
     }
@@ -118,12 +125,25 @@ class MainActivity : AppCompatActivity() {
     private fun updateUi(uiModel: MainViewModel.UiModel) {
         //if (uiModel is MainViewModel.UiModel.Loading) progressBar.show(this) else progressBar.hideProgress()
         when (uiModel) {
+            is MainViewModel.UiModel.setNumberValue -> (
+                    showNumberValue(
+                        uiModel.value
+                    ))
             is MainViewModel.UiModel.NavigationChangePass -> {
                 goToNewProcess()
             }
             is MainViewModel.UiModel.ShowErrorCurrentPss -> showErrorCurrentPass()
             is MainViewModel.UiModel.ShowErrorNewPss -> showErrorNewPass()
         }
+    }
+
+    private fun showNumberValue(value: String) {
+        binding.txtAns.text = value
+    }
+
+    override fun onClickButton(position: Int) {
+        viewModel.onButtonValue(position, binding.txtAns.text.toString())
+        Toast.makeText(this, "Position is: $position", Toast.LENGTH_SHORT).show()
     }
 
     private fun showErrorNewPass() {
@@ -135,6 +155,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun goToNewProcess() {
-        binding.txtAns.text =  "0.0"
+        binding.txtAns.text = "0"
     }
+
+
 }

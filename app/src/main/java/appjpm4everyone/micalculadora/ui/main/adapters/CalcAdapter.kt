@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import appjpm4everyone.micalculadora.R
 import appjpm4everyone.micalculadora.databinding.GridButtonsBinding
 
-class CalcAdapter (var context: Context, var arrayList: ArrayList<ButtonCalc>):
+class CalcAdapter (var context: Context, var arrayList: ArrayList<ButtonCalc>, private var onGetButton: OnGetButton):
     RecyclerView.Adapter<CalcAdapter.ButtonHolder>() {
 
+    //private lateinit var onGetButton: OnGetButton
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ButtonHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.grid_buttons, parent, false)
@@ -33,17 +34,19 @@ class CalcAdapter (var context: Context, var arrayList: ArrayList<ButtonCalc>):
         holder.binding.btnCe.setBackgroundColor(ContextCompat.getColor(context, buttonCalc.buttonColor))
 
         holder.binding.btnCe.setOnClickListener{
-            Toast.makeText(context, "Position is: $position", Toast.LENGTH_SHORT).show()
+            onGetButton.onClickButton(position)
         }
-
 
     }
 
 
     class ButtonHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val binding: GridButtonsBinding? = DataBindingUtil.bind(itemView)
-
     }
 
+
+    init{
+
+    }
 
 }
