@@ -58,6 +58,8 @@ class MainActivity : AppCompatActivity(), OnGetButton {
         //gridLayoutManager = GridLayoutManager(applicationContext, 3, LinearLayoutManager.VERTICAL, false)
         binding.calculatorR.layoutManager = gridLayoutManager
         binding.calculatorR.setHasFixedSize(true)
+        //Disable Scroll
+        binding.calculatorR.isNestedScrollingEnabled = false
 
         //arrayList
         arrayList = ArrayList()

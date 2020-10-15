@@ -25,7 +25,11 @@ class MainViewModel(private val useCasesValidateData: UseCasesValidateData) : Sc
     private var newValue: String = ""
     private var flagText = false
 
-    private var flagOperator = false
+    //To set M's buttons
+    private var stateMemory = ""
+    private var numberMemory: String = ""
+
+    private var flagOperator: Boolean = false
 
     init {
         onTest()
@@ -42,61 +46,130 @@ class MainViewModel(private val useCasesValidateData: UseCasesValidateData) : Sc
             5, 6, 7, 10, 11, 12, 15, 16, 17, 20 ->
                 value = useCasesValidateData.setDecimalValues(position)
             //Other values
-            2, 21, 22 -> value = useCasesValidateData.setOtherlValues(position)
+            0, 1, 2, 3, 21, 22 -> value = useCasesValidateData.setOtherlValues(position)
             //Arithmetic
             4, 8, 9, 13, 14, 18, 19, 24 -> value = useCasesValidateData.setArithmetic(position)
             else ->
                 value = ""
         }
         verifyNumAnswer(value, answer)
-        /*when(number) {
-            0 -> println("Invalid number")
-            1, 2 -> println("Number too low")
-            3 -> println("Number correct")
-            4 -> println("Number too high, but acceptable")
-            else -> println("Number too high")
-        }*/
     }
 
     private fun verifyNumAnswer(value: String, answer: String) {
 
-        if (value == "C") {
-            clearValues()
-            _model.value = UiModel.setNumberValue(
-                number1
-            )
+        if (valueAnotherOperator(value)) {
+            validateAnotherOperator(value, answer)
         } else if (valueOperator(value)) {
+            setFlagOperator(value)
             validateOperator(value, answer)
-        } else if (value == "+/-") {
-            changeSign(answer)
-        } else {
-                if (operator1.isEmpty()) {
-                    number1 = useCasesValidateData.validateNumChar(value, answer)
-                    _model.value = UiModel.setNumberValue(
-                        number1
-                    )
+        } else if(validateNumber(value)){
+            setNumberOperator(value)
+            if (operator1.isEmpty()) {
+                //number1 = useCasesValidateData.validateNumChar(value, answer)
+                if (!flagText) {
+                    flagText = true
+                    number1 = useCasesValidateData.validateNumChar(value, "")
                 } else {
-                    //To avoid override data
-                    if (!flagText) {
-                        flagText = true
-                        number2 = useCasesValidateData.validateNumChar(value, "")
-                    } else {
-                        number2 = useCasesValidateData.validateNumChar(value, answer)
-                    }
-                    _model.value = UiModel.setNumberValue(
-                        number2
-                    )
+                    number1 = useCasesValidateData.validateNumChar(value, answer)
                 }
+                _model.value = UiModel.setNumberValue(
+                    number1
+                )
+            } else {
+                //To avoid override data
+                if (!flagText) {
+                    flagText = true
+                    number2 = useCasesValidateData.validateNumChar(value, "")
+                } else {
+                    number2 = useCasesValidateData.validateNumChar(value, answer)
+                }
+                _model.value = UiModel.setNumberValue(
+                    number2
+                )
             }
+        }
+    }
+
+    private fun valueAnotherOperator(value: String): Boolean {
+        return value == "M+" || value == "MR" || value == "CE" || value == "C" || value == "+/-"
+    }
+
+    private fun validateAnotherOperator(value: String, answer: String) {
+        if (answer == "ERROR") {
+            clearValues()
+        } else {
+            anotherTask(value, answer)
+        }
+    }
+
+    private fun anotherTask(value: String, answer: String) {
+        when (value) {
+            "M+" -> setPositiveMemoryValues(answer)
+            "MR" -> setMemoryValues(answer)
+            "C" -> clearScreen()
+            "CE" -> clearLastValue()
+            "+/-" -> changeSign(answer)
+        }
+    }
+
+    private fun setPositiveMemoryValues(answer: String) {
+        if (answer.isNotEmpty() && (answer != "ERROR" || answer != "NaN")) {
+            if (stateMemory.isEmpty() && numberMemory.isEmpty()) {
+                numberMemory = answer
+                stateMemory = "M"
+            } else if (stateMemory.isNotEmpty()) {
+                stateMemory = "M+"
+            }
+        }
+    }
+
+    private fun setMemoryValues(answer: String) {
+        if (answer.isNotEmpty() && (answer != "ERROR" || answer != "NaN")) {
+            if (stateMemory == "M+" && numberMemory.isNotEmpty()) {
+                //memory state is M+
+                newValue = (numberMemory.toDouble() + answer.toDouble()).toString()
+                numberMemory = newValue
+                stateMemory = "M+"
+                avoidErrors()
+                stateMemory = "M+"
+                if (newValue.endsWith(".0")) {
+                    newValue = newValue.split(".")[0]
+                }
+                _model.value = UiModel.setNumberValue(
+                    newValue
+                )
+            }
+        }
+    }
+
+    private fun clearScreen() {
+        clearValues()
+        _model.value = UiModel.setNumberValue(
+            number1
+        )
+    }
+
+    private fun clearLastValue() {
+        if (operator1 == "") {
+            clearScreen()
+        } else {
+            number2 = "0"
+            newValue = ""
+            operator2 = ""
+            flagText = false
+            _model.value = UiModel.setNumberValue(
+                number2
+            )
+        }
     }
 
     private fun changeSign(answer: String) {
-        if(operator1.isEmpty()){
+        if (operator1.isEmpty()) {
             number1 = newSign(answer)
             _model.value = UiModel.setNumberValue(
                 number1
             )
-        }else{
+        } else {
             newValue = newSign(answer)
             _model.value = UiModel.setNumberValue(
                 newValue
@@ -104,12 +177,13 @@ class MainViewModel(private val useCasesValidateData: UseCasesValidateData) : Sc
         }
     }
 
-    private fun newSign(answer: String): String{
-        return if(answer=="ERROR"){
+
+    private fun newSign(answer: String): String {
+        return if (answer == "ERROR") {
             "0"
-        }else if(answer.startsWith("-")){
+        } else if (answer.startsWith("-")) {
             answer.split("-")[1]
-        }else{
+        } else {
             "-$answer"
         }
     }
@@ -117,6 +191,30 @@ class MainViewModel(private val useCasesValidateData: UseCasesValidateData) : Sc
     private fun valueOperator(value: String): Boolean {
         return value == "+" || value == "-" || value == "*" || value == "/" || value == "POT"
                 || value == "ROOT" || value == "%" || value == "="
+    }
+
+    private fun setFlagOperator(value: String) {
+        if (value == "+" || value == "-" || value == "*" || value == "/") {
+            flagOperator = true
+        }else if(value == "="){
+            flagOperator = false
+        }
+        flagText = false
+    }
+
+    private fun validateNumber(value: String) : Boolean{
+        return value == "0" || value == "1" || value == "2" || value == "3" || value == "4" ||
+            value == "5" || value == "6" || value == "7" || value == "8" || value == "9" || value == "."
+    }
+
+    private fun setNumberOperator(value: String) {
+        if(!flagOperator){
+            newValue=""
+            operator1 = ""
+            operator2 = ""
+        }
+
+
     }
 
     private fun validateOperator(value: String, answer: String) {
@@ -127,37 +225,30 @@ class MainViewModel(private val useCasesValidateData: UseCasesValidateData) : Sc
             //First assignation
             if (operator1.isEmpty()) {
                 operator1 = value
-                /*when (value) {
-                    "+" -> operator1 = "+"
-                    "-" -> operator1 = "-"
-                    "*" -> operator1 = "*"
-                    "/" -> operator1 = "/"
-                    "POT" -> operator1 = "POT"
-                }*/
             } else {
                 operator2 = value
-                /*when (value) {
-                    "+" -> operator2 = "+"
-                    "-" -> operator2 = "-"
-                    "*" -> operator2 = "*"
-                    "/" -> operator2 = "/"
-                    "=" -> operator2 = "="
-                    "POT" -> operator1 = "POT"
-                }*/
             }
             //Single operators
-            if (singleOperators(operator1)) {
+            if (singleOperators(operator1) && operator2.isEmpty()) {
                 flagText = false
-                arithmeticTask()
+                arithmeticTask(operator1)
             } else
             //Re assignation of values
                 if (operator2.isNotEmpty()) {
+                    //Avoid
+                    //if(flagOperator) {
                     flagText = false
-                    arithmeticTask()
+                    //Test if is a single operator
+                    if(singleOperators(operator2)){
+                        arithmeticTask(operator2)
+                    }else {
+                        arithmeticTask(operator1)
+                    }
                     if (operator1.isNotEmpty() && operator2.isNotEmpty() && operator2 != "=") {
                         //save the las operation
                         operator1 = operator2
                     }
+                    //}
                 }
         }
     }
@@ -166,7 +257,7 @@ class MainViewModel(private val useCasesValidateData: UseCasesValidateData) : Sc
         return operator1 == "POT" || operator1 == "ROOT" || operator1 == "%"
     }
 
-    private fun arithmeticTask() {
+    private fun arithmeticTask(operator1: String) {
 
         when (operator1) {
             "+" -> addValues()
@@ -176,8 +267,6 @@ class MainViewModel(private val useCasesValidateData: UseCasesValidateData) : Sc
             "POT" -> x2()
             "ROOT" -> sqrt()
             "%" -> percentage()
-            /*"/" -> operator2 = "/"
-            "=" -> operator1 = "="*/
         }
         if (newValue.endsWith(".0")) {
             newValue = newValue.split(".")[0]
@@ -247,15 +336,15 @@ class MainViewModel(private val useCasesValidateData: UseCasesValidateData) : Sc
 
     private fun percentage() {
         newValue = if (newValue.isEmpty()) {
-            (number1.toDouble()/100).toString()
+            (number1.toDouble() / 100).toString()
         } else {
-            (newValue.toDouble()/100).toString()
+            (newValue.toDouble() / 100).toString()
         }
         avoidErrors()
     }
 
     private fun avoidErrors() {
-        if (newValue == "Infinity" || newValue=="NaN") {
+        if (newValue == "Infinity" || newValue == "NaN") {
             clearValues()
             newValue = "ERROR"
         } else {
@@ -271,6 +360,7 @@ class MainViewModel(private val useCasesValidateData: UseCasesValidateData) : Sc
         operator1 = ""
         operator2 = ""
         flagText = false
+        flagOperator = false
     }
 
 }

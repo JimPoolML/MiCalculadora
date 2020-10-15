@@ -47,7 +47,10 @@ class UseCasesValidateData {
     fun setOtherlValues(position: Int ) : String{
         var value = ""
         when (position){
+            0 -> value = "M+"
+            1 -> value = "MR"
             2 -> value = "C"
+            3 -> value = "CE"
             21 -> value = "."
             22 -> value = "+/-"
         }
