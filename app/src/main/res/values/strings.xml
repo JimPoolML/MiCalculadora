@@ -9,6 +9,14 @@
     <string name="ce">CE</string>
     <string name="add">+</string>
 
+    <string name="pow2">POW2</string>
+    <string name="sqrt">SQRT</string>
+    <string name="del">DEL</string>
+    <string name="sin">SIN</string>
+    <string name="cos">COS</string>
+    <string name="tan">TAN</string>
+
+    <!--
     <string name="nine">9</string>
     <string name="eight">8</string>
     <string name="seven">CE</string>
@@ -32,4 +40,5 @@
     <string name="change_sing">+/-</string>
     <string name="off">OFF</string>
     <string name="equals">=</string>
+    -->
 </resources>

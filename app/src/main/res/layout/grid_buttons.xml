@@ -18,7 +18,7 @@
             android:layout_marginTop="@dimen/dp_5"
             android:background="@color/blue_button"
             android:paddingHorizontal="@dimen/dp_5"
-            android:text="@string/seven"
+            android:text="@string/ce"
             android:textColor="@color/black_text"
             android:textSize="@dimen/text_dim_18"
             android:textStyle="bold"

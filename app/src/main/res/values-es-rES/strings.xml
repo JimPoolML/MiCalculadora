@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MiCalculadora</string>
+    <string name="initZeros">0.0</string>
+    <string name="mm">M+</string>
+    <string name="mn">M</string>
+    <string name="c">C</string>
+    <string name="ce">CE</string>
+    <string name="add">+</string>
+    <string name="pow2">POT</string>
+    <string name="sqrt">RAIZ</string>
+    <string name="del">BOR</string>
+    <string name="sin">SEN</string>
+    <string name="cos">COS</string>
+    <string name="tan">TAN</string>
+</resources>

@@ -126,13 +126,13 @@ class MainActivity : AppCompatActivity(), OnGetButton {
         buttonItems.add(ButtonCalc("9", R.color.gray_button, R.color.black_text))
         buttonItems.add(ButtonCalc("8", R.color.gray_button, R.color.black_text))
         buttonItems.add(ButtonCalc("7", R.color.gray_button, R.color.black_text))
-        buttonItems.add(ButtonCalc("POT", R.color.orange_button, R.color.black_text))
+        buttonItems.add(ButtonCalc(getString(R.string.pow2), R.color.orange_button, R.color.black_text))
         buttonItems.add(ButtonCalc("-", R.color.red_button, R.color.black_text))
 
         buttonItems.add(ButtonCalc("6", R.color.gray_button, R.color.black_text))
         buttonItems.add(ButtonCalc("5", R.color.gray_button, R.color.black_text))
         buttonItems.add(ButtonCalc("4", R.color.gray_button, R.color.black_text))
-        buttonItems.add(ButtonCalc("RAIZ", R.color.orange_button, R.color.black_text))
+        buttonItems.add(ButtonCalc(getString(R.string.sqrt), R.color.orange_button, R.color.black_text))
         buttonItems.add(ButtonCalc("*", R.color.red_button, R.color.black_text))
 
         buttonItems.add(ButtonCalc("3", R.color.gray_button, R.color.black_text))
@@ -165,17 +165,17 @@ class MainActivity : AppCompatActivity(), OnGetButton {
         buttonItems.add(ButtonCalc("C", R.color.lands_blue_button, R.color.white_text))
 
         buttonItems.add(ButtonCalc("MR", R.color.lands_blue_button, R.color.white_text))
-        buttonItems.add(ButtonCalc("SIN", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc(getString(R.string.sin), R.color.lands_blue_button, R.color.white_text))
         buttonItems.add(ButtonCalc("%", R.color.lands_blue_button, R.color.white_text))
         buttonItems.add(ButtonCalc("4", R.color.lands_white_button, R.color.blue_text))
 
         buttonItems.add(ButtonCalc("5", R.color.lands_white_button, R.color.blue_text))
         buttonItems.add(ButtonCalc("6", R.color.lands_white_button, R.color.blue_text))
         buttonItems.add(ButtonCalc("X", R.color.lands_blue_button, R.color.white_text))
-        buttonItems.add(ButtonCalc("DEL", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc(getString(R.string.del), R.color.lands_blue_button, R.color.white_text))
 
         buttonItems.add(ButtonCalc("M+", R.color.lands_blue_button, R.color.white_text))
-        buttonItems.add(ButtonCalc("COS", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc(getString(R.string.cos), R.color.lands_blue_button, R.color.white_text))
         buttonItems.add(ButtonCalc("1/X", R.color.lands_blue_button, R.color.white_text))
         buttonItems.add(ButtonCalc("1", R.color.lands_white_button, R.color.blue_text))
 
@@ -185,7 +185,7 @@ class MainActivity : AppCompatActivity(), OnGetButton {
         buttonItems.add(ButtonCalc("+/-", R.color.lands_blue_button, R.color.white_text))
 
         buttonItems.add(ButtonCalc("M-", R.color.lands_blue_button, R.color.white_text))
-        buttonItems.add(ButtonCalc("TAN", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc(getString(R.string.tan), R.color.lands_blue_button, R.color.white_text))
         buttonItems.add(ButtonCalc("π", R.color.lands_blue_button, R.color.white_text))
         buttonItems.add(ButtonCalc("0", R.color.lands_white_button, R.color.blue_text))
 
