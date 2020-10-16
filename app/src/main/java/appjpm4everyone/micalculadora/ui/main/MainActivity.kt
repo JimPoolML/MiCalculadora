@@ -1,6 +1,7 @@
 package appjpm4everyone.micalculadora.ui.main
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.Display
@@ -26,6 +27,9 @@ class MainActivity : AppCompatActivity(), OnGetButton {
     private lateinit var component: MainActivityComponent
     private val viewModel by lazy { getViewModel { component.mainViewModel } }
 
+    //Landscape
+    private var isLandscape: Boolean = false
+
     //RecyclerView
     private val columns = 5
     private var gridLayoutManager: GridLayoutManager? = null
@@ -41,11 +45,14 @@ class MainActivity : AppCompatActivity(), OnGetButton {
 
         //dagger injection
         component = app.component.plus(MainActivityModule())
-        //initUI()
+        initUI()
         viewModel.modelMain.observe(this, Observer(::updateUi))
 
-        setRecyclerItems()
+        savedInstanceState?.getCharSequence("answer")
 
+    }
+    private fun initUI() {
+        setRecyclerItems()
     }
 
     private fun setRecyclerItems() {
@@ -55,18 +62,32 @@ class MainActivity : AppCompatActivity(), OnGetButton {
             LinearLayoutManager.VERTICAL,
             false
         )
+        //Disable Scroll
+        binding.calculatorR.isNestedScrollingEnabled = false
         //gridLayoutManager = GridLayoutManager(applicationContext, 3, LinearLayoutManager.VERTICAL, false)
         binding.calculatorR.layoutManager = gridLayoutManager
         binding.calculatorR.setHasFixedSize(true)
-        //Disable Scroll
-        binding.calculatorR.isNestedScrollingEnabled = false
+
 
         //arrayList
         arrayList = ArrayList()
-        arrayList = setEachButton()
-        calcAdapter = CalcAdapter(applicationContext, arrayList!!, this)
+        val orientation = resources.configuration.orientation
+        arrayList = if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // In landscape
+            isLandscape = true
+            setLandscapeEachButton()
+        } else {
+            // In portrait
+            isLandscape = false
+            setPortraitEachButton()
+        }
+        //arrayList = setPortraitEachButton()
+        calcAdapter = CalcAdapter(applicationContext, arrayList!!, this, isLandscape)
         //set Adapter to recyclerView
         binding.calculatorR.adapter = calcAdapter
+
+
+        calcAdapter?.notifyDataSetChanged()
 
 
     }
@@ -80,14 +101,20 @@ class MainActivity : AppCompatActivity(), OnGetButton {
 
         val density = resources.displayMetrics.density
         val dpWidth = outMetrics.widthPixels / density
-        return (dpWidth / 75).roundToInt()
+        val orientation = resources.configuration.orientation
+        return if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // In landscape
+            isLandscape = true
+            (dpWidth / 100).roundToInt()
+        } else {
+            // In portrait
+            isLandscape = false
+            (dpWidth / 75).roundToInt()
+        }
+
     }
 
-    private fun initUI() {
-        TODO("Not yet implemented")
-    }
-
-    private fun setEachButton(): ArrayList<ButtonCalc> {
+    private fun setPortraitEachButton(): ArrayList<ButtonCalc> {
         var buttonItems: ArrayList<ButtonCalc> = ArrayList()
 
         buttonItems.add(ButtonCalc("M+", R.color.blue_button, R.color.black_text))
@@ -123,19 +150,62 @@ class MainActivity : AppCompatActivity(), OnGetButton {
         return buttonItems
     }
 
+    private fun setLandscapeEachButton(): ArrayList<ButtonCalc>? {
+
+        var buttonItems: ArrayList<ButtonCalc> = ArrayList()
+
+        buttonItems.add(ButtonCalc("MC", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("X²", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("√", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("7", R.color.lands_white_button, R.color.blue_text))
+
+        buttonItems.add(ButtonCalc("8", R.color.lands_white_button, R.color.blue_text))
+        buttonItems.add(ButtonCalc("9", R.color.lands_white_button, R.color.blue_text))
+        buttonItems.add(ButtonCalc("÷", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("C", R.color.lands_blue_button, R.color.white_text))
+
+        buttonItems.add(ButtonCalc("MR", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("SIN", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("%", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("4", R.color.lands_white_button, R.color.blue_text))
+
+        buttonItems.add(ButtonCalc("5", R.color.lands_white_button, R.color.blue_text))
+        buttonItems.add(ButtonCalc("6", R.color.lands_white_button, R.color.blue_text))
+        buttonItems.add(ButtonCalc("X", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("DEL", R.color.lands_blue_button, R.color.white_text))
+
+        buttonItems.add(ButtonCalc("M+", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("COS", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("1/X", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("1", R.color.lands_white_button, R.color.blue_text))
+
+        buttonItems.add(ButtonCalc("2", R.color.lands_white_button, R.color.blue_text))
+        buttonItems.add(ButtonCalc("3", R.color.lands_white_button, R.color.blue_text))
+        buttonItems.add(ButtonCalc("-", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("+/-", R.color.lands_blue_button, R.color.white_text))
+
+        buttonItems.add(ButtonCalc("M-", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("TAN", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("π", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("0", R.color.lands_white_button, R.color.blue_text))
+
+        buttonItems.add(ButtonCalc(".", R.color.lands_white_button, R.color.blue_text))
+        buttonItems.add(ButtonCalc("+", R.color.lands_blue_button, R.color.white_text))
+        buttonItems.add(ButtonCalc("=", R.color.lands_blue_button, R.color.white_text))
+
+        return buttonItems
+
+    }
 
     private fun updateUi(uiModel: MainViewModel.UiModel) {
-        //if (uiModel is MainViewModel.UiModel.Loading) progressBar.show(this) else progressBar.hideProgress()
         when (uiModel) {
-            is MainViewModel.UiModel.setNumberValue -> (
+            is MainViewModel.UiModel.SetNumberValue -> (
                     showNumberValue(
                         uiModel.value
                     ))
-            is MainViewModel.UiModel.NavigationChangePass -> {
+            is MainViewModel.UiModel.SetInitValue -> {
                 goToNewProcess()
             }
-            is MainViewModel.UiModel.ShowErrorCurrentPss -> showErrorCurrentPass()
-            is MainViewModel.UiModel.ShowErrorNewPss -> showErrorNewPass()
         }
     }
 
@@ -144,21 +214,21 @@ class MainActivity : AppCompatActivity(), OnGetButton {
     }
 
     override fun onClickButton(position: Int) {
-        viewModel.onButtonValue(position, binding.txtAns.text.toString())
-        Toast.makeText(this, "Position is: $position", Toast.LENGTH_SHORT).show()
+        viewModel.onButtonValue(position, binding.txtAns.text.toString(), isLandscape)
     }
 
-    private fun showErrorNewPass() {
-        TODO("Not yet implemented")
-    }
-
-    private fun showErrorCurrentPass() {
-        TODO("Not yet implemented")
-    }
 
     private fun goToNewProcess() {
         binding.txtAns.text = "0"
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putCharSequence("answer", binding.txtAns.text)
+    }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState.getCharSequence("answer", binding.txtAns.text)
+    }
 }

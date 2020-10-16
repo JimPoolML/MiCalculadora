@@ -1,22 +1,20 @@
 package appjpm4everyone.usecases
 
-
-class UseCasesValidateData {
-
+class UseCasesLandscapeValidateData {
     fun setDecimalValues(position: Int ) : String{
         var value = ""
         when (position){
+            3 -> value = "7"
+            4 -> value = "8"
             5 -> value = "9"
-            6 -> value = "8"
-            7 -> value = "7"
-            10 -> value = "6"
-            11 -> value = "5"
-            12 -> value = "4"
-            15 -> value = "3"
-            16 -> value = "2"
-            17 -> value = "1"
-            20 -> value = "0"
-            21 -> value = "."
+            11 -> value = "4"
+            12 -> value = "5"
+            13 -> value = "6"
+            19 -> value = "1"
+            20 -> value = "2"
+            21 -> value = "3"
+            27 -> value = "0"
+            28 -> value = "."
         }
         return value
     }
@@ -24,12 +22,15 @@ class UseCasesValidateData {
     fun setOtherlValues(position: Int ) : String{
         var value = ""
         when (position){
-            0 -> value = "M+"
-            1 -> value = "MR"
-            2 -> value = "C"
-            3 -> value = "CE"
-            21 -> value = "."
-            22 -> value = "+/-"
+            0 -> value = "MC"
+            16 -> value = "M+"
+            8 -> value = "MR"
+            7 -> value = "C"
+            15 -> value = "CE"
+            28 -> value = "."
+            23 -> value = "+/-"
+            24 -> value = "M-"
+            26 -> value = "PI"
         }
         return value
     }
@@ -37,15 +38,20 @@ class UseCasesValidateData {
     fun setArithmetic(position: Int ) : String{
         var value = ""
         when (position){
-            4 -> value = "+"
-            9 -> value = "-"
+            29 -> value = "+"
+            22 -> value = "-"
             14 -> value = "*"
-            19 -> value = "/"
-            24 -> value = "="
+            6 -> value = "/"
+            30 -> value = "="
             //Others operators
-            8 -> value = "POT"
-            13 -> value = "ROOT"
-            18 -> value = "%"
+            1 -> value = "POT"
+            2 -> value = "ROOT"
+            10 -> value = "%"
+            18 -> value = "1/X"
+            //Trigonometry
+            9 -> value = "SIN"
+            17 -> value = "COS"
+            25 -> value = "TAN"
         }
         return value
     }
@@ -77,7 +83,7 @@ class UseCasesValidateData {
         }
     }
 
-     private fun setDotNumber(answer: String) : String{
+    private fun setDotNumber(answer: String) : String{
         return when {
             answer.contains(".") -> {
                 answer
@@ -90,5 +96,4 @@ class UseCasesValidateData {
             }
         }
     }
-
 }

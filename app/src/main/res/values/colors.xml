@@ -16,6 +16,8 @@
 
     <!--Landscape -->
     <color name="background_white">#fafafa</color>
+    <color name="white_text">#fafafa</color>
+    <color name="blue_text">#2296f3</color>
     <color name="lands_ans">#737373</color>
     <color name="lands_blue_button">#2296f3</color>
     <color name="lands_white_button">#fafafa</color>
